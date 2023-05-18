@@ -1,0 +1,6 @@
+Development
+Lab
+Production
+QA
+Sandbox
+Test
