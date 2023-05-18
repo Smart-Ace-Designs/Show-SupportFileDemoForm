@@ -9,6 +9,8 @@ This repository contains all files required to build the **Show-SupportFileDemoF
 ## Purpose
 The **Show-SupportFileDemoForm** script launches a Windows form that demonstrates using a external support file with the script that can be embedded into the compiled executable.
 
+![Screenshot 2023-05-17 212455](https://github.com/Smart-Ace-Designs/Show-SupportFileDemoForm/assets/132539186/7e711d6d-c44e-40a4-88b6-293d0f8c6cc9)
+
 Note: To ensure the resource file has not be modified post extraction when the ScriptoForm has been compiled, the file hash is verified before displaying the form.  For additional security, the PowerShell script should be signed prior to compilation and the PowerShell execution policy should be set appropriately when using the ScriptoForm.
 
 ## Requirements
