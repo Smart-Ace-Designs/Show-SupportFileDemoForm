@@ -11,7 +11,11 @@ The **Show-SupportFileDemoForm** script launches a Windows form that demonstrate
 
 ![Screenshot 2023-05-17 212455](https://github.com/Smart-Ace-Designs/Show-SupportFileDemoForm/assets/132539186/7e711d6d-c44e-40a4-88b6-293d0f8c6cc9)
 
-Note: To ensure the resource file has not be modified post extraction when the ScriptoForm has been compiled, the file hash is verified before displaying the form.  For additional security, the PowerShell script should be signed prior to compilation and the PowerShell execution policy should be set appropriately when using the ScriptoForm.
+## Support Files
+The following support files are included with this project:
+- **Environments.txt**:  Contains a list of static network environment names used for pre-populating the form at load time.
+
+Note: To ensure that support files have not be modified post extraction when the ScriptoForm has been compiled, the file hash of each file is verified before enabling functionality or displaying the form. For additional security, the PowerShell script should be signed prior to compilation and the PowerShell execution policy should be set appropriately when using the ScriptoForm.
 
 ## Requirements
 - This project supports the following command shells:
