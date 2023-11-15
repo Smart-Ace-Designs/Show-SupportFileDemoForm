@@ -58,7 +58,7 @@ Microsoft .NET 8.x Framework
 - Run the following command from within your *Build* subdirectory:<br>
 ``dotnet publish -f net8.0-windows -v q -nologo -o ..\Release\LTS; dotnet clean -f net8.0-windows -v q -nologo``
 - The compiled executable will be created in the *Release\LTS* subdirectory of your local repository directory.  This location can be changed by modifying the ``-o`` parameter in the above command.
-- The latest [Microsoft .NET 6.x Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) will be required on any computer used to run the executable.
+- The latest [Microsoft .NET 8.x Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) will be required on any computer used to run the executable.
 
 ## Executable Notes
 - When the executable file is run it will extract all resource files that were included in the compilation process to a unique temporary extraction directory in the user's profile directory.
