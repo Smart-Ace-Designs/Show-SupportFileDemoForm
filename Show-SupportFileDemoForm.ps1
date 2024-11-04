@@ -9,9 +9,9 @@ This script is used to demonstrate a basic ScriptoForm that has been customized 
 #>
 
 #region Settings
-$EnvironmentsFile = "$PSScriptRoot\Environments.txt"
-$EnvironmentsFileHash = "CE29ACC6600D2BE76D67484D162568D6518F9EE9011FCB02602A4FA63AE8D383"
-$SupportContact = "Smart Ace"
+$ENVIRONMENTS_FILE = "$PSScriptRoot\Environments.txt"
+$ENVIRONMENTS_FILE_HASH = "CE29ACC6600D2BE76D67484D162568D6518F9EE9011FCB02602A4FA63AE8D383"
+$SUPPORT_CONTACT = "Smart Ace"
 #endregion
 
 #region Assemblies
@@ -114,9 +114,9 @@ $ShowFormMain =
 #region Handlers
 $FormMain_Load =
 {
-    if (Test-Path -Path $EnvironmentsFile)
+    if (Test-Path -Path $ENVIRONMENTS_FILE)
     {
-        $ComboBoxEnvironment.Items.AddRange($(Get-Content -Path $EnvironmentsFile))
+        $ComboBoxEnvironment.Items.AddRange($(Get-Content -Path $ENVIRONMENTS_FILE))
         $ComboBoxEnvironment.SelectedIndex = 0
     }
 }
@@ -168,7 +168,7 @@ $ButtonRun_Click =
     catch
     {
         [void][System.Windows.Forms.MessageBox]::Show(
-            $PSItem.Exception.Message + "`n`nPlease contact $SupportContact for technical support.",
+            $PSItem.Exception.Message + "`n`nPlease contact $SUPPORT_CONTACT for technical support.",
             "Exception",
             [System.Windows.Forms.MessageBoxButtons]::OK,
             [System.Windows.Forms.MessageBoxIcon]::Warning
@@ -186,7 +186,7 @@ $ButtonRun_Click =
 #endregion
 
 #region Main
-if ((Get-FileHash -Path $EnvironmentsFile).Hash -eq $EnvironmentsFileHash)
+if ((Get-FileHash -Path $ENVIRONMENTS_FILE).Hash -eq $ENVIRONMENTS_FILE_HASH)
 {
     Invoke-Command -ScriptBlock $ShowFormMain
 }
