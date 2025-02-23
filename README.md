@@ -34,7 +34,7 @@ Use any of the below workflows to create an executable file of the PowerShell sc
 Microsoft .NET 4.x Framework
 - Open a supported command shell and navigate to the *Build* subdirectory in your local repository directory.
 - Run the following command from within your *Build* subdirectory:<br>
-``dotnet publish -f net48 -v q -nologo -o ..\Release\Legacy; dotnet clean -f net48 -v q -nologo``
+``dotnet publish -f net48 -v q -o ..\Release\Legacy; dotnet clean -f net48 -v q``
 - The compiled executable will be created in the *Release\Legacy* subdirectory of your local repository directory.  This location can be changed by modifying the ``-o`` argument in the above command.
 - The latest [Microsoft .NET 4.x Framework Runtime](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) will be required on any computer used to run the executable.
 
