@@ -109,6 +109,33 @@ $ShowFormMain =
 #endregion
 
 #region Functions
+function Invoke-FormAction
+{
+    param
+    (
+        [Parameter(Mandatory, Position = 0)] [ScriptBlock]$Action,
+        [Parameter(Position = 1)] [ScriptBlock]$Reset = $null,
+        [Parameter(Position = 2)] [String]$StatusText = "Working...please wait"
+    )
+
+    try
+    {
+        $ToolStripStatusLabelMain.Text = $StatusText
+        $FormMain.Controls | Where-Object {$PSItem -isnot [System.Windows.Forms.StatusStrip]} | ForEach-Object {$PSItem.Enabled = $false}
+        $FormMain.Cursor = [System.Windows.Forms.Cursors]::WaitCursor
+        [System.Windows.Forms.Application]::DoEvents()
+        Invoke-Command -ScriptBlock $Action
+    }
+    
+    finally
+    {
+        $FormMain.Controls | ForEach-Object {$PSItem.Enabled = $true}
+        $FormMain.ResetCursor()
+        if ($Reset) {Invoke-Command -ScriptBlock $Reset}
+        $ToolStripStatusLabelMain.Text = "Ready"
+        $StatusStripMain.Update()
+    }
+}
 #endregion
 
 #region Handlers
@@ -150,38 +177,31 @@ $TextBoxServerName_TextChanged =
 
 $ButtonRun_Click =
 {
-    $ToolStripStatusLabelMain.Text = "Working...please wait"
-    $FormMain.Controls | Where-Object {$PSItem -isnot [System.Windows.Forms.StatusStrip]} | ForEach-Object {$PSItem.Enabled = $false}
-    $FormMain.Cursor = [System.Windows.Forms.Cursors]::WaitCursor
-    [System.Windows.Forms.Application]::DoEvents()
-
-    try
-    {
-        Start-Sleep -Seconds 2
-        [void][System.Windows.Forms.MessageBox]::Show(
-            "Simulation of work completed.`n`nServer: $($TextBoxServerName.Text)`nEnvironment: $($ComboBoxEnvironment.Text)",
-            "Results",
-            [System.Windows.Forms.MessageBoxButtons]::OK,
-            [System.Windows.Forms.MessageBoxIcon]::Information
-        )
+    Invoke-FormAction -Action {
+        try
+        {
+            Start-Sleep -Seconds 2
+            [void][System.Windows.Forms.MessageBox]::Show(
+                "Simulation of work completed.`n`nServer: $($TextBoxServerName.Text)`nEnvironment: $($ComboBoxEnvironment.Text)",
+                "Results",
+                [System.Windows.Forms.MessageBoxButtons]::OK,
+                [System.Windows.Forms.MessageBoxIcon]::Information
+            )
+        }
+        catch
+        {
+            [void][System.Windows.Forms.MessageBox]::Show(
+                $PSItem.Exception.Message + "`n`nPlease contact $SUPPORT_CONTACT for technical support.",
+                "Exception",
+                [System.Windows.Forms.MessageBoxButtons]::OK,
+                [System.Windows.Forms.MessageBoxIcon]::Warning
+            )
+        }
+    } -Reset {
+        $ComboBoxEnvironment.SelectedIndex = 0
+        $TextBoxServerName.Clear()
+        $TextBoxServerName.Focus()
     }
-    catch
-    {
-        [void][System.Windows.Forms.MessageBox]::Show(
-            $PSItem.Exception.Message + "`n`nPlease contact $SUPPORT_CONTACT for technical support.",
-            "Exception",
-            [System.Windows.Forms.MessageBoxButtons]::OK,
-            [System.Windows.Forms.MessageBoxIcon]::Warning
-        )
-    }
-
-    $FormMain.Controls | ForEach-Object {$PSItem.Enabled = $true}
-    $FormMain.ResetCursor()
-    $ComboBoxEnvironment.SelectedIndex = 0
-    $TextBoxServerName.Clear()
-    $TextBoxServerName.Focus()
-    $ToolStripStatusLabelMain.Text = "Ready"
-    $StatusStripMain.Update()
 }
 #endregion
 
